@@ -7,3 +7,5 @@ Ros 2 Humble package providing a node that converts twist commands for a differe
 ```
 installs a systemd service on the host which launches the node automatically inside the docker container.
 It assumes the docker container and the ROS package are installed appropriately.
+
+![steering angle equation](https://latex.codecogs.com/svg.image?\delta=\arctan(\frac{L\omega}{v}))

@@ -3,7 +3,7 @@
 <package format="3">
   <name>twist_to_ackermann</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>Ros 2 Humble package providing a node that converts twist commands for a differential drive robot to Ackermann steering commands.</description>
   <maintainer email="descobardelrio@gmail.com">root</maintainer>
   <license>TODO: License declaration</license>
 

@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='root',
     maintainer_email='descobardelrio@gmail.com',
-    description='TODO: Package description',
+    description='Ros 2 Humble package providing a node that converts twist commands for a differential drive robot to Ackermann steering commands.',
     license='TODO: License declaration',
     extras_require={
         'test': [
