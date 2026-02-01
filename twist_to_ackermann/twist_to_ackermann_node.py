@@ -12,6 +12,7 @@ class TwistToAckermann(Node):
         self.wheelbase = 0.55 # distance between front and rear axle of hunter_se urdf
         self.subscriber_ = self.create_subscription(Twist, '/cmd_vel_differential_drive', self.differential_drive_vel_callback, 10)
         self.publisher_ = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.get_logger().info('Initialized twist_to_ackermann node, waiting to recieve differential drive velocity commands...')
 
     def differential_drive_vel_callback(self, msg_diff):
 
