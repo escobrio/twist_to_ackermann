@@ -2,13 +2,25 @@
 
 A ROS 2 Humble package that converts velocity commands from differential drive to Ackermann steering, enabling differential drive velocity commands to control Ackermann drive vehicles like the Hunter SE robot.
 
-## Design Approach
+Specifically, the package provides a node that subscribes and transforms differential drive velocity commands (`/cmd_vel_differential_drive`) and publishes Ackermann steering commands (`/cmd_vel`). 
 
-This package provides a node that subscribes to differential drive velocity commands (`/cmd_vel_differential_drive`) and publishes Ackermann steering commands (`/cmd_vel`). 
+## Demo Videos
+
+### Driving in a Circle
+This video demonstrates the robot executing a circular trajectory using the converted Ackermann steering commands.
+
+![Demo](videos/drive_circle.gif)
+
+### Pure Rotation Handling
+This video demonstrates how pure rotation is handled, which is infeasible for an Ackermann drive robot. The wheels turn to the maximum steering angle in the intended direction while the vehicle remains stationary.
+
+![Demo](videos/pure_rotation_handling.gif)
+
+## Design Approach
 
 ### Conversion Formula
 
-The steering angle is calculated using the relationship:
+The steering angle is calculated with the equation:
 
 ![steering angle equation](https://latex.codecogs.com/svg.image?\delta=\arctan(\frac{L\omega}{v}))
 
@@ -32,19 +44,6 @@ Ackermann drive vehicles cannot perform pure rotation in place (linear velocity 
 - Makes it clear to the operator that linear velocity is required for rotation
 
 The calculated steering angle is clamped to the maximum steering angle limit to prevent invalid commands.
-
-## Demo Videos
-
-### Driving in a Circle
-This video demonstrates the robot successfully executing a circular trajectory using the converted Ackermann steering commands.
-
-<video src="videos/drive_circle.mp4" controls></video>
-
-### Pure Rotation Handling
-This video shows the intended pure rotation behavior - first to the right, then to the left. The wheels turn to maximum steering angle in the intended direction while the vehicle remains stationary, providing a clear visual indication of the rotation intent.
-
-<video src="videos/pure_rotation_handling.mp4" controls></video>
-
 
 ## systemd Service
 ```bash
