@@ -30,8 +30,7 @@ class TwistToAckermann(Node):
         # Handle pure rotation edge case
         if abs(lin_vel) < self.min_vel:
             lin_vel = 0.0
-            sign = (ang_vel > 0) - (ang_vel < 0)
-            steering_angle = sign * self.steering_angle_limit
+            steering_angle = math.copysign(self.steering_angle_limit, ang_vel)
         else:
             # Calculate ackermann steering angle
             steering_angle = math.atan(self.wheelbase * ang_vel / lin_vel)
