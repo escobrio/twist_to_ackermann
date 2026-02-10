@@ -16,9 +16,9 @@ class TwistToAckermann(Node):
         super().__init__('twist_to_ackermann')
         self.subscriber_ = self.create_subscription(Twist, '/cmd_vel_differential_drive', self.differential_drive_vel_callback, 10)
         self.publisher_ = self.create_publisher(Twist, '/cmd_vel', 10)
-        self.wheelbase = 0.55               # [m]
-        self.steering_angle_limit = 0.69    # [rad]
-        self.min_vel = 0.001                # [m/s]
+        self.wheelbase_m = 0.55
+        self.steering_angle_limit_rad = 0.69
+        self.min_vel_mps = 0.001
         self.get_logger().info('Initialized twist_to_ackermann node, waiting to recieve differential drive velocity commands...')
 
     def differential_drive_vel_callback(self, msg_differential_drive):
@@ -28,13 +28,13 @@ class TwistToAckermann(Node):
         ang_vel = msg_differential_drive.angular.z
 
         # Handle pure rotation edge case
-        if abs(lin_vel) < self.min_vel:
+        if abs(lin_vel) < self.min_vel_mps:
             lin_vel = 0.0
-            steering_angle = math.copysign(self.steering_angle_limit, ang_vel)
+            steering_angle = math.copysign(self.steering_angle_limit_rad, ang_vel)
         else:
             # Calculate ackermann steering angle
-            steering_angle = math.atan(self.wheelbase * ang_vel / lin_vel)
-            steering_angle = max(-self.steering_angle_limit, min(steering_angle, self.steering_angle_limit)) # Inline clamp
+            steering_angle = math.atan(self.wheelbase_m * ang_vel / lin_vel)
+            steering_angle = max(-self.steering_angle_limit_rad, min(steering_angle, self.steering_angle_limit_rad)) # Inline clamp
         
         # Publish ackermann steering command
         msg_ackermann = Twist()
